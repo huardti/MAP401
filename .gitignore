@@ -1,0 +1,4 @@
+
+*.o
+test_geom
+test_image
