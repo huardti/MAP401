@@ -1,0 +1,53 @@
+nombre de contour de :
+img/Asterix3.pbm
+
+travail en cour ....
+img/Asterix3.pbm:
+	32 contours
+	12958 segments
+taille de la distance seuil : ecriture du fichier .eps ....
+il y a 1314 segments dans le fichier.
+img/Asterix3.pbm
+
+travail en cour ....
+img/Asterix3.pbm:
+	32 contours
+	12958 segments
+taille de la distance seuil : ecriture du fichier .eps ....
+il y a 633 segments dans le fichier.
+img/Asterix3.pbm
+
+travail en cour ....
+img/Asterix3.pbm:
+	32 contours
+	12958 segments
+taille de la distance seuil : ecriture du fichier .eps ....
+il y a 392 segments dans le fichier.
+img/Asterix3.pbm
+
+travail en cour ....
+img/Asterix3.pbm:
+	32 contours
+	12958 segments
+taille de la distance seuil : ecriture du fichier .eps ....
+il y a 260 segments dans le fichier.
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 966 courbes dans le fichier.
+ecriture du fichier .eps ....
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 371 courbes dans le fichier.
+ecriture du fichier .eps ....
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 253 courbes dans le fichier.
+ecriture du fichier .eps ....
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 183 courbes dans le fichier.
+ecriture du fichier .eps ....

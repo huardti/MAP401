@@ -1,0 +1,54 @@
+nombre de contour de :
+img/Asterix3.pbm
+	32 contours
+	12958 segments
+
+il y a 7698 segments dans le fichier. d = 0
+
+il y a 7698 segments dans le fichier. d = 0.5
+
+il y a 1314 segments dans le fichier. d = 1
+
+il y a 633 segments dans le fichier. d = 2
+
+il y a 392 segments dans le fichier. d = 4
+
+il y a 260 segments dans le fichier. d = 8
+
+il y a 147 segments dans le fichier. d = 16
+
+img/lettre-L-cursive.pbm
+	3 contours
+	4231 segments
+
+il y a 2380 segments dans le fichier. d = 0
+
+il y a 2380 segments dans le fichier.d = 0.5
+
+il y a 271 segments dans le fichier.d = 1
+
+il y a 103 segments dans le fichier.d = 2
+
+il y a 74 segments dans le fichier.d = 4
+
+il y a 51 segments dans le fichier.d = 8
+
+il y a 36 segments dans le fichier.d = 16
+
+img/Picasso-ColombesDeLaPaix.pbm
+	106 contours
+	21870 segments
+
+il y a 13338 segments dans le fichier.d = 0
+
+il y a 13338 segments dans le fichier.d = 0.5
+
+il y a 2452 segments dans le fichier.d = 1
+
+il y a 1130 segments dans le fichier.d = 2
+
+il y a 763 segments dans le fichier.d = 4
+
+il y a 489 segments dans le fichier.d = 8
+
+il y a 309 segments dans le fichier.d = 16

@@ -1,0 +1,154 @@
+nombre de contour de :
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 8405 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 0
+
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 8405 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 0.5
+
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 966 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 1
+
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 371 courbes dans le fichier.
+ecriture du fichier .eps ....
+ d = 2
+
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 253 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 4
+
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 183 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 8
+
+img/Asterix3.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 119 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 16
+
+
+
+
+img/lettre-L-cursive.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 2782 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 0
+
+img/lettre-L-cursive.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 2782 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 0.5
+
+img/lettre-L-cursive.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 255 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 1
+
+img/lettre-L-cursive.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 46 courbes dans le fichier.
+ecriture du fichier .eps ....
+ d = 2
+
+img/lettre-L-cursive.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 34 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 4
+
+img/lettre-L-cursive.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 29 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 8
+
+img/lettre-L-cursive.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 21 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 16
+
+
+
+
+img/Picasso-ColombesDeLaPaix.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 14060 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 0
+
+img/Picasso-ColombesDeLaPaix.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 14060 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 0.5
+
+img/Picasso-ColombesDeLaPaix.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 1599 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 1
+
+img/Picasso-ColombesDeLaPaix.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 717 courbes dans le fichier.
+ecriture du fichier .eps ....
+ d = 2
+
+img/Picasso-ColombesDeLaPaix.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 505 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 4
+
+img/Picasso-ColombesDeLaPaix.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 332 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 8
+
+img/Picasso-ColombesDeLaPaix.pbm
+
+travail en cour ....
+taille de la distance seuil : il y a 229 courbes dans le fichier.
+ecriture du fichier .eps ....
+d = 16
+

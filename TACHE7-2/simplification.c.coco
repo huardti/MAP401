@@ -1,0 +1,289 @@
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include "contour.h"
+#include "geometrie2.h"
+#include "simplification.h"
+#include "types_macros.h"
+
+/**
+ * Renvoie c1 suivit de c2 sans le premier élément de c2
+ * car c'est le même que le dernier de c1
+ */
+static Contour concatener_contours(Contour c1, Contour c2) {
+    c1.last->suiv = c2.first->suiv;
+    c1.last = c2.last;
+    c1.taille += c2.taille-1;
+
+    // c2.first était en double, on le free()
+    free(c2.first); 
+    return c1;
+}
+
+Contour simplification_segment(Contour C, double d) {
+    double distance_max = 0;
+    UINT k = 0;
+    Cellule_Liste_Point *p_k = C.first;
+
+    assert(d >= 0); //une distance doit être positive
+
+    Segment s = {
+        .A = C.first->data,
+        .B = C.last->data
+    };
+
+    //on trouve le point p_k le plus loin du segment s
+    Cellule_Liste_Point *c = C.first;
+    for (UINT j = 0; j < C.taille; j++) {
+        double di = distance_point_segment(c->data, s);
+        if (di > distance_max) {
+            p_k = c;
+            k = j;
+            distance_max = di;
+        }
+        c = c->suiv;
+    }
+
+    if (distance_max <= d) {
+        Cellule_Liste_Point *last = creer_element_liste_Point(s.B);
+        last->suiv = NULL;
+
+        Cellule_Liste_Point *first = creer_element_liste_Point(s.A);
+        first->suiv = last;
+
+        Contour contour = {
+            .taille = 2,
+            .first = first,
+            .last = last
+        };
+
+        return contour;
+    }
+
+    Contour c1 = {
+        .taille = k+1,
+        .first = C.first,
+        .last = p_k
+    };
+    Contour c2 = {
+        .taille = C.taille-k,
+        .first = p_k,
+        .last = C.last
+    };
+
+    Contour l1 = simplification_segment(c1, d);
+    Contour l2 = simplification_segment(c2, d);
+
+    return concatener_contours(l1, l2);
+}
+
+/**
+ * Fait la somme des points de Cont[i0] à Cont[i0 + n-1]
+ */
+static Point somme_point(Tableau_Point CONT, UINT i0, UINT n) {
+    Point P = {0, 0};
+    for (UINT i = 1; i < n; i++) {
+        P = add_point(P, CONT.tab[i0 + i]);
+    }
+    return P;
+}
+
+Bezier2 approx_bezier2(Tableau_Point CONT, UINT j1, UINT j2) {
+    UINT n = j2 - j1;
+    Bezier2 B;
+
+    B.C0 = CONT.tab[j1];
+    B.C2 = CONT.tab[j2];
+
+    if (n == 1) {
+        B.C1 = point_produit_constante(add_point(CONT.tab[j1], CONT.tab[j2]), 0.5);
+    } else {
+        double nr = (double)n;
+        double alpha = (3*nr) / (nr*nr - 1);
+        double beta = (1 - 2*nr) / (2*nr + 2);
+        B.C1 = add_point(
+                point_produit_constante(somme_point(CONT, j1, n), alpha),
+                point_produit_constante(add_point(CONT.tab[j1], CONT.tab[j2]), beta));
+    }
+    return B;
+}
+
+static double gamma(double k, double nr) {
+    return 6*k*k*k*k - 8*nr*k*k*k + 6*k*k - 4*nr*k + nr*nr*nr*nr -nr*nr;
+}
+
+static Point somme_point_gamma_C1(Tableau_Point CONT, UINT i0, UINT n) {
+    Point P = {0, 0};
+    for (UINT i = 1; i < n; i++) {
+        P = add_point(P, point_produit_constante(CONT.tab[i0 + i], gamma((double)i, (double)n)));
+    }
+    return P;
+}
+
+static Point somme_point_gamma_C2(Tableau_Point CONT, UINT i0, UINT n) {
+    Point P = {0, 0};
+    for (UINT i = 1; i < n; i++) {
+        P = add_point(P, point_produit_constante(CONT.tab[i0 + i], gamma((double)n-i, (double)n)));
+    }
+    return P;
+}
+
+Bezier3 approx_bezier3(Tableau_Point CONT, UINT j1, UINT j2) {
+    UINT n = j2 - j1;
+    Bezier3 B;
+
+    if (n < 3) {
+        Bezier2 B2 = approx_bezier2(CONT, j1, j2);
+        B = conversion_bezier_2_3(B2);
+    } else {
+        double nr = (double)n;
+        double alpha = ((-15)*nr*nr*nr + 5*nr*nr + 2*nr + 4) / (3*(nr+2)*(3*nr*nr+1));
+        double beta = (10*nr*nr*nr - 15*nr*nr + nr + 2) / (3*(nr+2)*(3*nr*nr+1));
+        double lambda = (70*nr) / (3*(nr*nr-1)*(nr*nr-4)*(3*nr*nr+1));
+
+        B.C0 = CONT.tab[j1];
+        B.C3 = CONT.tab[j2];
+
+        B.C1 = add_point(
+               add_point(
+                point_produit_constante(CONT.tab[j1], alpha),
+                point_produit_constante(somme_point_gamma_C1(CONT, j1, n), lambda)),
+                point_produit_constante(CONT.tab[j2], beta));
+
+        B.C2 = add_point(
+               add_point(
+                point_produit_constante(CONT.tab[j1], beta),
+                point_produit_constante(somme_point_gamma_C2(CONT, j1, n), lambda)),
+                point_produit_constante(CONT.tab[j2], alpha));        
+
+    }
+    return B;
+}
+
+/**
+ * Calcule la distance entre le point P et le point C(ti)
+ */
+static double distance_point_bezier2(Point P, Bezier2 C, double ti) {
+    return distance_point(P, calcul_point_bezier2(C, ti));
+}
+
+/**
+ * Calcule la distance entre le point P et le point C(ti) en bezier 3
+ */
+static double distance_point_bezier3(Point P, Bezier3 C, double ti) {
+    return distance_point(P, calcul_point_bezier3(C, ti));
+}
+
+/**
+ * Renvoie la concatenation de L1 suivit de L2
+ */
+static Seq_Bezier2 concatenation(Seq_Bezier2 L1, Seq_Bezier2 L2) {
+    Seq_Bezier2 L = {
+        .taille = L1.taille + L2.taille,
+        .tab = malloc((L1.taille + L2.taille) * sizeof(Bezier2))
+    };
+
+    for (UINT i = 0; i < L1.taille; i++) {
+        L.tab[i] = L1.tab[i];
+    }
+    for (UINT i = 0; i < L2.taille; i++) {
+        L.tab[L1.taille + i] = L2.tab[i];
+    }
+
+    return L;
+}
+
+/**
+ * Renvoie la concatenation de L1 suivit de L2, en bezier 3
+ */
+static Seq_Bezier3 concatenation3(Seq_Bezier3 L1, Seq_Bezier3 L2) {
+    Seq_Bezier3 L = {
+        .taille = L1.taille + L2.taille,
+        .tab = malloc((L1.taille + L2.taille) * sizeof(Bezier3))
+    };
+
+    for (UINT i = 0; i < L1.taille; i++) {
+        L.tab[i] = L1.tab[i];
+    }
+    for (UINT i = 0; i < L2.taille; i++) {
+        L.tab[L1.taille + i] = L2.tab[i];
+    }
+
+    return L;
+}
+
+Seq_Bezier2 simplification_douglas_peucker_bezier2(Tableau_Point CONT, UINT j1, UINT j2, double d) {
+    UINT n = j2 - j1;
+    Bezier2 B = approx_bezier2(CONT, j1, j2);
+    double dmax = 0;
+    UINT k = j1;
+    Seq_Bezier2 L;
+
+    assert(n != 0 && "division par zéro");
+
+    for (UINT j = j1+1; j <= j2; j++) {
+        UINT i = j - j1;
+        double ti = (double)i / (double)n;
+        double dj = distance_point_bezier2(CONT.tab[j], B, ti);
+    
+        if (dmax < dj) {
+            dmax = dj;
+            k = j;
+        }
+    }
+
+    if (dmax <= d) {
+        L.taille = 1;
+        L.tab = malloc(sizeof(Bezier2));
+        L.tab[0] = B;
+    } else {
+        Seq_Bezier2 L1 = simplification_douglas_peucker_bezier2(CONT, j1, k, d);
+        Seq_Bezier2 L2 = simplification_douglas_peucker_bezier2(CONT, k, j2, d);
+        L = concatenation(L1, L2);
+
+        free(L1.tab);
+        free(L2.tab);
+    }
+
+    return L;
+}
+
+Seq_Bezier3 simplification_douglas_peucker_bezier3(Tableau_Point CONT, UINT j1, UINT j2, double d) {
+    UINT n = j2 - j1;
+    Bezier3 B = approx_bezier3(CONT, j1, j2);
+    double dmax = 0;
+    UINT k = j1;
+    Seq_Bezier3 L;
+
+    assert(n != 0 && "division par zéro");
+    assert(j1 < j2);
+    assert(d > 0);
+
+    for (UINT j = j1+1; j <= j2; j++) {
+        UINT i = j - j1;
+        double ti = (double)i / (double)n;
+        double dj = distance_point_bezier3(CONT.tab[j], B, ti);
+    
+        if (dmax < dj) {
+            dmax = dj;
+            k = j;
+        }
+    }
+
+    if (dmax <= d) {
+        L.taille = 1;
+        L.tab = malloc(sizeof(Bezier3));
+        L.tab[0] = B;
+    } else {
+        Seq_Bezier3 L1 = simplification_douglas_peucker_bezier3(CONT, j1, k, d);
+        Seq_Bezier3 L2 = simplification_douglas_peucker_bezier3(CONT, k, j2, d);
+        L = concatenation3(L1, L2);
+
+        free(L1.tab);
+        free(L2.tab);
+    }
+
+    return L;
+}

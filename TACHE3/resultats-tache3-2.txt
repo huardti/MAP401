@@ -1,0 +1,40 @@
+caractere2.pbm:
+  taille : 7 9
+  nb_points : 40
+  
+chat.pbm:
+  taille : 250 140
+  nb_points : 880
+  
+coq.pbm:
+  taille : 700 720
+  nb_points : 5386
+  
+elephant.pbm:
+  taille : 800 700
+  nb_points : 5344
+  
+gymnaste.pbm:
+  taille : 1056 1047
+  nb_points : 8784
+  
+image_ex_poly.pbm:
+  taille : 4 4
+  nb_points : 18
+  
+labyrinthe.pbm:
+  taille : 221 201
+  nb_points : 44000
+  
+lettreZ.pbm:
+  taille : 600 1029
+  nb_points : 9396
+  
+map401.pbm:
+  taille : 830 300
+  nb_points : 8072
+  
+tete.pbm:
+  taille : 1252 1252
+  nb_points : 8136
+  
